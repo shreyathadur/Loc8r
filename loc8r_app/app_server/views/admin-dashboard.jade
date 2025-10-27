@@ -1,0 +1,71 @@
+  if error
+    .alert.alert-danger #{error}
+  .row
+    .col-xs-12.col-md-8
+      .panel.panel-primary
+        .panel-heading
+          h2.panel-title Manage Users
+        .panel-body
+          h3 All Users
+          ul.list-group
+            each user in users
+              li.list-group-item
+                | #{user.username} (#{user.email})
+                if user.isAdmin
+                  span.label.label-success Admin
+                else
+                  span.label.label-default User
+                form(action=`/admin/set-admin/${user._id}` method="post" style="display:inline;")
+                  input(type="hidden" name="isAdmin" value=(!user.isAdmin).toString())
+                  button.btn.btn-warning.btn-xs(type="submit")
+                    if user.isAdmin
+                      | Demote
+                    else
+                      | Promote
+extends layout
+
+block content
+  .row.page-header(style="margin-bottom: 20px;")
+    .col-lg-12
+      h1(style="margin-top: 20px;") Admin Dashboard
+  .row
+    .col-xs-12.col-md-8
+      .panel.panel-primary
+        .panel-heading
+          h2.panel-title Manage Locations
+        .panel-body
+          form(action="/admin/add-location", method="post")
+            .form-group
+              label(for="name") Name
+              input#name.form-control(type="text", name="name", required)
+            .form-group
+              label(for="address") Address
+              input#address.form-control(type="text", name="address", required)
+            .form-group
+              label(for="facilities") Facilities (comma separated)
+              input#facilities.form-control(type="text", name="facilities")
+            .form-group
+              label(for="description") Description
+              textarea#description.form-control(name="description", rows="3")
+            button.btn.btn-success(type="submit") Add Location
+          hr
+          h3 Existing Locations
+          ul.list-group
+            each location in locations
+              li.list-group-item
+                | #{location.name} - #{location.address}
+                form(action=`/admin/delete-location/${location._id}` method="post" style="display:inline;")
+                  button.btn.btn-danger.btn-xs(type="submit") Delete
+      .panel.panel-primary
+        .panel-heading
+          h2.panel-title Manage Reviews
+        .panel-body
+          h3 All Reviews
+          ul.list-group
+            each review in reviews
+              li.list-group-item
+                | #{review.author}: #{review.text}
+                form(action=`/admin/delete-review/${review._id}` method="post" style="display:inline;")
+                  button.btn.btn-danger.btn-xs(type="submit") Delete
+    .col-xs-12.col-md-4
+      p.lead Welcome, Admin! You can manage locations and reviews here.

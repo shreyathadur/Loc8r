@@ -1,0 +1,69 @@
+extends layout
+
+block content
+  .row.page-header(style="margin-bottom: 20px;")
+    .col-lg-12
+      h1(style="margin-top: 20px;") #{location.name}
+
+  .row
+    .col-xs-12.col-md-9
+      .row
+        .col-xs-12.col-sm-6
+          p.rating
+            - for (var i = 0; i < location.rating; i++) {
+                span.glyphicon.glyphicon-star
+            - }
+            - for (var i = location.rating; i < 5; i++) {
+                span.glyphicon.glyphicon-star-empty
+            - }
+          p #{location.address}
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Opening hours
+            .panel-body
+              p Monday - Friday : 7:00am - 7:00pm
+              p Saturday : 8:00am - 5:00pm
+              p Sunday : closed
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Facilities
+            .panel-body
+              each facility in location.facilities
+                span.label.label-warning
+                  span.glyphicon.glyphicon-ok
+                  | &nbsp;#{facility}
+                | &nbsp;
+        .col-xs-12.col-sm-6.location-map
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Location map
+            .panel-body
+              iframe(src=mapUrl, width="350", height="350", style="border:0;", allowfullscreen, loading="lazy", referrerpolicy="no-referrer-when-downgrade")
+      
+      .row
+        .col-xs-12
+          .panel.panel-primary.review-panel
+            .panel-heading
+              h2.panel-title Customer reviews
+            .panel-body.review-container
+              p #{location.description}
+              each review in reviews
+                .row
+                  .review
+                    .well.well-sm.review-header
+                      span.rating
+                        - for (var i = 0; i < review.rating; i++) {
+                            span.glyphicon.glyphicon-star
+                        - }
+                        - for (var i = review.rating; i < 5; i++) {
+                            span.glyphicon.glyphicon-star-empty
+                        - }
+                      span.reviewAuthor #{review.author}
+                      small.reviewTimestamp #{review.date}
+                    .col-xs-12
+                      p #{review.text}
+    .col-xs-12.col-md-3
+      p.lead
+        | #{location.description}
+      p
+        | If you've been and you like it - or if you don't - please leave a review to help other people just like you.

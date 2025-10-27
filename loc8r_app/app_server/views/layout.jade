@@ -1,0 +1,49 @@
+doctype html
+html
+  head
+    meta(name='Viewport', content='width=device-width',intial-scale=1.0)
+
+    title= title
+  
+    link(rel='stylesheet',href='/bootstrap/css/amelia.bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+  body
+    .navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          a.navbar-brand(href='/') Locator
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        #navbar-main.navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li 
+              a(href='/about/') <b> About </b>
+            li 
+              a(href='/signin') <b> SignIn </b>
+            li 
+              a(href='/review') <b>Add Review </b>
+            li
+              a(href='/all-reviews') <b>All Reviews</b>
+          if loggedIn
+            ul.nav.navbar-nav.navbar-right
+              li
+                a(href='/profile')
+                  span.glyphicon.glyphicon-user
+                  |  #{username} (#{email})
+              li
+                a(href='/logout') Logout
+    .container
+      block content
+      footer
+        .row
+          .col-xs-12
+            small &copy;@AIML-E & D copy rights 2025
+
+  
+   
+  script(src='/javascripts/jquery-1.11.1.min.js')
+  script(src='/javascripts/jquery-1.11.1.min.js')
+ 

@@ -1,0 +1,13 @@
+extends layout
+
+
+
+block content
+  h1(style="margin-top:200px")= title
+  p Welcome to #{title}
+  if loginSuccess
+    p(style='color:green') Login successful!
+  if loggedIn
+    p(style='color:green') You are logged in as #{username}
+  else
+    p(style='color:red') You are not logged in.
